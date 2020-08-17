@@ -20,7 +20,7 @@ do
   sleep 1
 done
 
-rm -rf /opt/besu/database
+# rm -rf /opt/besu/database
 
 bootnode_pubkey=`sed 's/^0x//' ${BOOTNODE_KEY_FILE}`
 boonode_ip=`getent hosts bootnode | awk '{ print $1 }'`
@@ -29,5 +29,6 @@ bootnode_enode_address="enode://${bootnode_pubkey}@${boonode_ip}:${BOOTNODE_P2P_
 
 p2pip=`awk 'END{print $1}' /etc/hosts`
 
-/opt/besu/bin/besu $@ --bootnodes=$bootnode_enode_address --p2p-host=$p2pip
+echo $@
+/opt/besu/bin/besu $@ --bootnodes=$bootnode_enode_address --p2p-host=$p2pip --revert-reason-enabled=true --logging=info
 
